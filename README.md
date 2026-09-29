@@ -16,9 +16,7 @@ npm run lint && npm run typecheck && npm run format:check
 
 Edit `data/site.ts`:
 
-- `email`: currently a placeholder (`hello@example.com`)
 - `url`: the deployed domain (used for canonical URLs, OG image and sitemap)
-- LinkedIn `href` in `socials`
 
 Project facts (status, engine, technologies) live in `data/projects.ts`. They are written conservatively, so update them as projects move along.
 

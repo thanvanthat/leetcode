@@ -2,7 +2,7 @@ import type { NavItem, SocialLink } from "@/lib/types";
 
 /**
  * Global identity + contact details.
- * Replace the placeholder values marked TODO before deploying.
+ * Replace the value marked TODO before deploying.
  */
 export const site = {
   name: "Thanvanth AT",
@@ -14,14 +14,13 @@ export const site = {
   url: "https://thanvanth.dev", // TODO: replace with the deployed domain
   title: "Thanvanth AT — Game Developer & AI Engineer",
   description: "Game Developer and AI Engineer building interactive experiences, AI systems and creative technology.",
-  email: "hello@example.com", // TODO: replace with your real contact email
+  email: "thanvanthat24@gmail.com",
   year: 2026,
 } as const;
 
 export const socials: SocialLink[] = [
   { label: "GitHub", href: "https://github.com/thanvanthat", handle: "@thanvanthat" },
-  // TODO: replace with your LinkedIn profile URL
-  { label: "LinkedIn", href: "https://www.linkedin.com/", handle: "Thanvanth AT" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/thanvanthat", handle: "in/thanvanthat" },
 ];
 
 export const navItems: NavItem[] = [
