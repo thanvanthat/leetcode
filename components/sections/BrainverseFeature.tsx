@@ -21,7 +21,7 @@ export function BrainverseFeature() {
         style={{ background: `radial-gradient(50% 40% at 15% 30%, ${glow}55, transparent 70%)` }}
       />
       <div className="relative gutter">
-        <SectionLabel index="06.2" title="Feature — Adaptive Play" />
+        <SectionLabel index="06.3" title="Feature — Adaptive Play" />
         <div className="mt-8 grid gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-8">
             <RevealText

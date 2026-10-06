@@ -5,9 +5,12 @@ import type { Project } from "@/lib/types";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { Pipeline } from "@/components/ui/Pipeline";
 import { RevealText } from "@/components/ui/RevealText";
+import { ProjectArt } from "@/components/visuals/ProjectArt";
 import { ProjectVisual } from "@/components/visuals/ProjectVisual";
 import { CaseHeroVisual } from "./CaseHeroVisual";
+import { ProjectLinks } from "./ProjectLinks";
 import { ProjectMeta } from "./ProjectMeta";
+import { ScreenGallery } from "./ScreenGallery";
 
 interface CaseStudyProps {
   project: Project;
@@ -60,15 +63,29 @@ export function CaseStudy({ project, next }: CaseStudyProps) {
             className="display text-[clamp(3.5rem,12vw,13rem)] text-bone"
           />
           <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:items-end">
-            <p className="display-wide max-w-[24ch] text-[clamp(1.5rem,3vw,2.5rem)] text-bone/85 lg:col-span-7">
-              {project.statement}
-            </p>
+            <div className="lg:col-span-7">
+              <p className="display-wide max-w-[24ch] text-[clamp(1.5rem,3vw,2.5rem)] text-bone/85">{project.statement}</p>
+              <ProjectLinks project={project} size="lg" className="mt-10" />
+            </div>
             <ProjectMeta project={project} compact className="lg:col-span-5" />
           </div>
         </div>
       </header>
 
       <CaseHeroVisual project={project} />
+
+      {project.highlights && (
+        <dl className="gutter grid grid-cols-2 border-b border-bone/10 lg:grid-cols-4">
+          {project.highlights.map((h, i) => (
+            <div key={h.label} className="border-bone/10 py-10 pr-6 lg:border-r lg:pl-6 lg:first:pl-0 lg:last:border-r-0">
+              <dt className="label text-ash">{h.label}</dt>
+              <dd className="display mt-3 text-[clamp(3rem,6vw,5.5rem)]" style={{ color: i === 0 ? accent : undefined }}>
+                {h.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      )}
 
       <div className="gutter pb-10">
         <Chapter index="01" title="Overview">
@@ -139,49 +156,58 @@ export function CaseStudy({ project, next }: CaseStudyProps) {
       </div>
 
       {/* Gallery */}
-      <section aria-label="Visual gallery" className="pb-24">
-        <div className="gutter label mb-8 flex justify-between text-ash">
-          <span>
-            <span className="text-bone">09</span> Visual Gallery
-          </span>
-          <span className="lg:hidden">Swipe →</span>
-        </div>
-        <div
-          data-cursor="drag"
-          className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto gutter lg:grid lg:grid-cols-12 lg:overflow-visible"
-        >
-          {project.gallery.map((g, i) => (
-            <FadeIn
-              key={g.caption}
-              delay={i * 0.1}
-              className={
-                i === 0
-                  ? "w-[85vw] shrink-0 snap-center lg:col-span-7 lg:w-auto"
-                  : i === 1
-                    ? "w-[85vw] shrink-0 snap-center lg:col-span-5 lg:mt-24 lg:w-auto"
-                    : "w-[85vw] shrink-0 snap-center lg:col-span-8 lg:col-start-3 lg:w-auto"
-              }
-            >
-              <figure>
-                <div className="aspect-[4/3] overflow-hidden lg:aspect-[16/10]">
-                  <ProjectVisual
-                    project={project}
-                    variant={g.variant}
-                    className="transition-transform duration-[1.2s] ease-[var(--ease-out-expo)] hover:scale-[1.04]"
-                  />
-                </div>
-                <figcaption className="label mt-3 flex justify-between text-ash">
-                  <span>{g.caption}</span>
-                  <span>0{i + 1}</span>
-                </figcaption>
-              </figure>
-            </FadeIn>
-          ))}
-        </div>
-        <p className="gutter label mt-6 text-[0.6rem] text-ash/60">
-          Key art is generated for this portfolio; project captures coming soon.
-        </p>
-      </section>
+      {project.screens?.length ? (
+        <section aria-label="Product screens" className="pb-24">
+          <div className="gutter label mb-8 text-ash">
+            <span className="text-bone">09</span> Product Screens
+          </div>
+          <ScreenGallery project={project} />
+        </section>
+      ) : (
+        <section aria-label="Visual gallery" className="pb-24">
+          <div className="gutter label mb-8 flex justify-between text-ash">
+            <span>
+              <span className="text-bone">09</span> Visual Gallery
+            </span>
+            <span className="lg:hidden">Swipe →</span>
+          </div>
+          <div
+            data-cursor="drag"
+            className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto gutter lg:grid lg:grid-cols-12 lg:overflow-visible"
+          >
+            {project.gallery.map((g, i) => (
+              <FadeIn
+                key={g.caption}
+                delay={i * 0.1}
+                className={
+                  i === 0
+                    ? "w-[85vw] shrink-0 snap-center lg:col-span-7 lg:w-auto"
+                    : i === 1
+                      ? "w-[85vw] shrink-0 snap-center lg:col-span-5 lg:mt-24 lg:w-auto"
+                      : "w-[85vw] shrink-0 snap-center lg:col-span-8 lg:col-start-3 lg:w-auto"
+                }
+              >
+                <figure>
+                  <div className="aspect-[4/3] overflow-hidden lg:aspect-[16/10]">
+                    <ProjectVisual
+                      project={project}
+                      variant={g.variant}
+                      className="transition-transform duration-[1.2s] ease-[var(--ease-out-expo)] hover:scale-[1.04]"
+                    />
+                  </div>
+                  <figcaption className="label mt-3 flex justify-between text-ash">
+                    <span>{g.caption}</span>
+                    <span>0{i + 1}</span>
+                  </figcaption>
+                </figure>
+              </FadeIn>
+            ))}
+          </div>
+          <p className="gutter label mt-6 text-[0.6rem] text-ash/60">
+            Key art is generated for this portfolio; project captures coming soon.
+          </p>
+        </section>
+      )}
 
       {/* Next project */}
       <Link
@@ -192,7 +218,7 @@ export function CaseStudy({ project, next }: CaseStudyProps) {
         style={{ background: next.atmosphere.base }}
       >
         <div className="absolute inset-0 opacity-30 transition-[opacity,transform] duration-1000 ease-[var(--ease-out-expo)] group-hover:scale-105 group-hover:opacity-60">
-          <ProjectVisual project={next} />
+          <ProjectArt project={next} />
         </div>
         <div className="relative gutter py-24 lg:py-40">
           <p className="label text-ash">Next project — {next.number}</p>

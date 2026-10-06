@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 import type { Project } from "@/lib/types";
 import { easeCine, easeOutExpo } from "@/lib/utils";
 import { Pipeline } from "@/components/ui/Pipeline";
-import { ProjectVisual } from "@/components/visuals/ProjectVisual";
+import { ProjectArt } from "@/components/visuals/ProjectArt";
 import { ProjectMeta } from "./ProjectMeta";
 
 interface ProjectModalProps {
@@ -94,7 +94,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             <p className="mt-4 max-w-[40ch] text-lg text-bone/75 sm:text-xl">{project.statement}</p>
 
             <div className="mt-10 aspect-[16/9] overflow-hidden lg:aspect-[21/9]">
-              <ProjectVisual project={project} animated />
+              <ProjectArt project={project} animated />
             </div>
 
             <div className="mt-12 grid gap-12 lg:grid-cols-12">

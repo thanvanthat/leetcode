@@ -3,7 +3,7 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import type { Project } from "@/lib/types";
-import { ProjectVisual } from "@/components/visuals/ProjectVisual";
+import { ProjectArt } from "@/components/visuals/ProjectArt";
 
 /** Full-bleed hero visual that un-clips and settles as it scrolls into view. */
 export function CaseHeroVisual({ project }: { project: Project }) {
@@ -18,7 +18,7 @@ export function CaseHeroVisual({ project }: { project: Project }) {
     <div ref={ref} className="relative h-[60svh] overflow-hidden lg:h-[100svh]">
       <motion.div style={{ clipPath }} className="absolute inset-0 overflow-hidden">
         <motion.div style={{ scale }} className="absolute inset-0 will-change-transform">
-          <ProjectVisual project={project} animated />
+          <ProjectArt project={project} animated priority />
         </motion.div>
       </motion.div>
     </div>

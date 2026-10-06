@@ -1,9 +1,9 @@
 export type ProjectCategory = "game" | "ai" | "web";
 
-export type ProjectStatus = "In development" | "Prototype" | "Concept prototype" | "Completed" | "Exploring";
+export type ProjectStatus = "Live" | "In development" | "Prototype" | "Concept prototype" | "Completed" | "Exploring";
 
 /** Identifies which procedural artwork renders for a project. */
-export type ProjectVisualKey = "brainverse" | "freshco" | "echo" | "ecodash" | "eventplatform";
+export type ProjectVisualKey = "brainverse" | "freshco" | "grantpilot" | "echo" | "ecodash" | "eventplatform";
 
 export interface ProjectAtmosphere {
   /** Accent color used sparingly for highlights, states and hover. */
@@ -12,6 +12,21 @@ export interface ProjectAtmosphere {
   base: string;
   /** Soft secondary tone used in gradients and artwork. */
   glow: string;
+}
+
+/** A real capture of the product, stored under /public/projects. */
+export interface ProjectScreen {
+  src: string;
+  alt: string;
+  caption: string;
+  width: number;
+  height: number;
+}
+
+export interface ProjectLink {
+  label: string;
+  href: string;
+  kind: "live" | "source";
 }
 
 export interface PipelineStep {
@@ -46,10 +61,17 @@ export interface Project {
   system: PipelineStep[];
   process: CaseStudySection[];
   result: string;
+  /** Procedural key-art variants, used when a project has no real screens yet. */
   gallery: { caption: string; variant: number }[];
+  /** Real product captures. When present they replace the procedural art. */
+  screens?: ProjectScreen[];
+  /** "phone" renders screens in a handset frame, "desktop" in a browser frame. */
+  device?: "phone" | "desktop";
+  /** Facts worth surfacing as large numbers on the case study. */
+  highlights?: { value: string; label: string }[];
   /** Optional honest disclaimer, e.g. for AI estimation systems. */
   note?: string;
-  links?: { label: string; href: string }[];
+  links?: ProjectLink[];
 }
 
 export interface NavItem {

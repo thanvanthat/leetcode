@@ -3,7 +3,8 @@ import { AISection } from "@/components/sections/AISection";
 import { BrainverseFeature } from "@/components/sections/BrainverseFeature";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
-import { FreshcoFeature } from "@/components/sections/FreshcoFeature";
+import { FresoraFeature } from "@/components/sections/FresoraFeature";
+import { GrantPilotFeature } from "@/components/sections/GrantPilotFeature";
 import { GameDevSection } from "@/components/sections/GameDevSection";
 import { Hero } from "@/components/sections/Hero";
 import { ProcessSection } from "@/components/sections/ProcessSection";
@@ -21,7 +22,8 @@ export default function HomePage() {
       <GameDevSection />
       <UnrealSection />
       <AISection />
-      <FreshcoFeature />
+      <FresoraFeature />
+      <GrantPilotFeature />
       <BrainverseFeature />
       <SkillsSection />
       <ProcessSection />

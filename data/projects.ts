@@ -61,53 +61,131 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "freshco-ai",
+    slug: "fresora",
     number: "02",
-    title: "FreshcoAI",
-    statement: "Computer vision for food awareness.",
+    title: "Fresora",
+    statement: "Scan food. Use it before it becomes waste.",
     description:
-      "An AI-assisted food freshness and inventory platform: point a camera at produce, identify it, estimate freshness and get smart recommendations.",
+      "A live, AI-assisted food freshness and zero-waste app. Scan food with your phone, get a measured read of its visible condition, track what you own and rescue it with recipes before it spoils.",
     categories: ["ai"],
-    type: "AI + computer vision mobile platform",
-    role: "AI engineering · App development",
-    engine: "Mobile application",
-    technologies: ["Computer Vision", "CNN", "Object Detection", "Python", "AI APIs", "Mobile Application"],
-    status: "Prototype",
+    type: "AI + computer vision app · Android & web",
+    role: "Solo build · Product design, mobile, backend, CV",
+    engine: "React Native (Expo) · FastAPI",
+    technologies: [
+      "React Native",
+      "Expo",
+      "TypeScript",
+      "FastAPI",
+      "OpenCV",
+      "MobileNetV2 (ONNX)",
+      "YOLOX-Tiny",
+      "Supabase",
+      "TanStack Query",
+      "Zustand",
+      "Vercel",
+    ],
+    status: "Live",
     visual: "freshco",
+    device: "phone",
     atmosphere: { accent: "#c5ec7a", base: "#0a0f0a", glow: "#2d4a1f" },
     overview:
-      "FreshcoAI combines object detection and image classification to recognise food items from a camera feed, estimate their visual freshness, and turn that into inventory insight.",
+      "Fresora runs one loop: scan, identify, measure, score, recommend, track, rescue. A photo goes to a FastAPI service where OpenCV measures the surface and on-device models identify the food. The app turns that into a 0–100 freshness score, a storage tip, an estimated freshness window and zero-waste recipes for whatever needs using first.",
     problem:
-      "Households and small stores lose food simply because nobody is tracking what is ageing. Manual inventory is tedious and easy to abandon.",
+      "Food gets thrown away because nobody notices it ageing until it is too late. Manual inventory apps are tedious, and most 'AI freshness' demos give a confident verdict without showing how they got it.",
     concept:
-      "Make inventory passive. The camera identifies items, a model estimates visual freshness, and the app surfaces what to use first.",
+      "Measure first, then score in the open. Every number comes from a real measurement: defect coverage, browning, hue drift, texture and colour consistency. A documented formula weights them per food family, so the score is explainable rather than a black box, and the app says plainly when a photo cannot tell.",
     responsibilities: [
-      "Designing the computer vision pipeline",
-      "Working with CNN-based classification and object detection",
-      "Integrating AI APIs into the application flow",
-      "Designing the recommendation and inventory experience",
+      "Designed and built the whole product end to end",
+      "27-screen Expo / React Native app with its own design system and 6 languages",
+      "FastAPI backend with OpenCV metrics and a transparent scoring formula",
+      "Food identification with MobileNetV2 and YOLOX-Tiny via onnxruntime",
+      "Inventory, scan history and per-item freshness journey",
+      "Zero-waste recipes that prioritise expiring food and never use spoiled items",
+      "Optional Supabase sync with row-level security; works fully offline without it",
+      "Deployed the web build and the API to Vercel",
     ],
     system: [
-      { label: "Camera", detail: "Captures a frame of the food item or shelf." },
-      { label: "Computer Vision", detail: "Pre-processes the frame and locates regions of interest." },
-      { label: "CNN / Object Detection", detail: "Detects and classifies individual items." },
-      { label: "Food Identification", detail: "Maps detections to known food categories." },
-      { label: "Freshness Estimation", detail: "Estimates visual freshness from appearance cues." },
-      { label: "Smart Recommendations", detail: "Suggests what to use first and flags ageing stock." },
+      { label: "Scan", detail: "Camera capture or a photo from the gallery, on Android or the web build." },
+      {
+        label: "Identify",
+        detail: "MobileNetV2 and YOLOX-Tiny (ONNX) recognise the food, including several items in one photo.",
+      },
+      { label: "Measure", detail: "OpenCV measures defects, browning, discoloration, texture and colour consistency." },
+      { label: "Score", detail: "A documented formula weights each signal per food family into a 0–100 score." },
+      { label: "Recommend", detail: "Storage advice and an estimated freshness window from a curated knowledge base." },
+      { label: "Track & rescue", detail: "Inventory, freshness journeys and recipes built around what is about to be lost." },
     ],
     process: [
       {
-        heading: "Vision pipeline",
-        body: "Set up detection and classification stages and tested them on everyday produce images.",
+        heading: "Real measurements",
+        body: "Built the OpenCV metrics first and tested them on real produce. Two fixes came from testing: filling mask holes so dark rot is not cut out of the food region, and regularising texture so JPEG noise stops costing points on a flawless surface.",
       },
       {
-        heading: "Estimation, not verdicts",
-        body: "Framed freshness as a visual estimate with confidence, so the app assists decisions rather than making safety claims.",
+        heading: "An honest score",
+        body: "Wrote the scoring formula as code with tests: weights sum to 1 per food family, missing signals redistribute their weight, browning is only measured on foods where the formula is valid, and meat, seafood and dairy are capped at 72 because a photo cannot prove they are safe.",
       },
-      { heading: "Inventory layer", body: "Designing how estimates become simple, actionable recommendations in the app." },
+      {
+        heading: "One codebase, two platforms",
+        body: "The same TypeScript source ships as the Android app and the web build through react-native-web, with on-device storage by default and optional Supabase sync.",
+      },
     ],
-    result: "Working prototype of the recognition and estimation flow; the model and inventory experience are being refined.",
-    note: "Freshness outputs are AI-assisted visual estimates intended to support inventory decisions. They are not a food-safety or health assessment.",
+    result:
+      "Live on the web, with the API deployed on Vercel. The Android build comes from the same codebase. The app works with zero credentials and reports exactly which models and services are active.",
+    highlights: [
+      { value: "27", label: "Screens" },
+      { value: "5", label: "OpenCV signals" },
+      { value: "0–100", label: "Explainable score" },
+      { value: "6", label: "Languages" },
+    ],
+    note: "Fresora analyses visible food characteristics from images. It cannot detect bacteria, odourless toxins or internal hazards. Results are AI-assisted estimates, not food-safety guarantees.",
+    screens: [
+      {
+        src: "/projects/fresora/home.webp",
+        alt: "Fresora home screen with fresh and needs-attention counts",
+        caption: "Home: what needs attention today",
+        width: 780,
+        height: 1688,
+      },
+      {
+        src: "/projects/fresora/inventory.webp",
+        alt: "Fresora My Food inventory with freshness scores",
+        caption: "My Food: scored inventory",
+        width: 780,
+        height: 1688,
+      },
+      {
+        src: "/projects/fresora/item.webp",
+        alt: "Fresora item detail showing an overripe avocado scored 38 out of 100",
+        caption: "Item detail and freshness window",
+        width: 780,
+        height: 1688,
+      },
+      {
+        src: "/projects/fresora/recipes.webp",
+        alt: "Fresora zero-waste recipe screen listing ingredients to rescue",
+        caption: "Zero-waste recipe rescue",
+        width: 780,
+        height: 1688,
+      },
+      {
+        src: "/projects/fresora/scan.webp",
+        alt: "Fresora scan screen with camera and gallery options",
+        caption: "Scan one item or several",
+        width: 780,
+        height: 1688,
+      },
+      {
+        src: "/projects/fresora/onboarding.webp",
+        alt: "Fresora onboarding screen reading Scan any food",
+        caption: "Onboarding",
+        width: 780,
+        height: 1688,
+      },
+    ],
+    links: [
+      { label: "Open the live app", href: "https://fresora-web.vercel.app/inventory", kind: "live" },
+      { label: "Source code", href: "https://github.com/thanvanthat/fresora-AI", kind: "source" },
+    ],
     gallery: [
       { caption: "Live scan", variant: 0 },
       { caption: "Detection overlay", variant: 1 },
@@ -115,8 +193,144 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "echo-protocol-escape",
+    slug: "grantpilot-ai",
     number: "03",
+    title: "GrantPilot AI",
+    statement: "From government tender to review-ready bid.",
+    description:
+      "An AI-assisted government opportunity intelligence platform for Indian startups. It finds grants and tenders, scores how well a company fits, drafts the proposal and checks compliance before internal review.",
+    categories: ["ai", "web"],
+    type: "AI decision-support web platform",
+    role: "Solo build · Product design, frontend, AI integration",
+    engine: "React 18 · Vite",
+    technologies: [
+      "React 18",
+      "Vite",
+      "React Router",
+      "Tailwind CSS",
+      "shadcn-style UI",
+      "Node.js proxy",
+      "SNS Agent Workbench",
+      "GitHub Actions",
+      "GitHub Pages",
+    ],
+    status: "Live",
+    visual: "grantpilot",
+    device: "desktop",
+    atmosphere: { accent: "#ff9933", base: "#0a1222", glow: "#1d3b6e" },
+    overview:
+      "GrantPilot covers the whole path from opportunity to submission-ready draft for schemes like DPIIT Startup India, iDEX, BIRAC BIG, TIDE 2.0 and GeM tenders. A company profile and its documents feed a qualification engine, which drives a proposal workspace, which feeds a compliance workspace with a readiness gate.",
+    problem:
+      "Startups lose weeks reading long government notices to decide whether to apply, then rebuild the same profile, evidence and compliance checklist for every bid. Most tools stop at listing opportunities and give no reasons.",
+    concept:
+      "One connected workflow, and every result explains itself. Qualification shows the score, eligibility, capability gaps, risks and a Pursue / Review / Skip recommendation with its reasons. The proposal cites matched capabilities and addresses the gaps. Compliance checks requirements, documents and risks before anything goes to review.",
+    responsibilities: [
+      "Product design and a government-portal design system (saffron, navy, tricolour accents)",
+      "13 pages: dashboard, opportunities, detail, pipeline, compare, proposals, compliance, reports and more",
+      "Deterministic qualification engine: weighted fit score, eligibility, gaps, risks, evidence and a recommendation",
+      "Proposal workspace with section-by-section drafting and writing guidance",
+      "Compliance engine: requirement checklist, document verification, risk register and readiness gate",
+      "AI assistant widget connected to the SNS Agent Workbench, with an offline fallback",
+      "CI/CD to GitHub Pages with GitHub Actions",
+    ],
+    system: [
+      { label: "Profile & documents", detail: "Company capabilities, sector, experience and uploaded evidence." },
+      { label: "Opportunity discovery", detail: "Grants, tenders and challenges filtered by sector, status and deadline." },
+      {
+        label: "Qualification",
+        detail: "Weighted fit score, eligibility pass or fail, gaps, risks and a Pursue / Review / Skip call.",
+      },
+      { label: "Proposal", detail: "A draft built from the qualification that cites strengths and addresses gaps." },
+      { label: "Compliance", detail: "Requirements, documents and risks checked against a transparent readiness gate." },
+      { label: "Internal review", detail: "Ready for review, or a clear list of what is blocking it." },
+    ],
+    process: [
+      {
+        heading: "Design system first",
+        body: "Built a government-portal visual language and a shared component kit so 13 data-heavy pages stay consistent and readable.",
+      },
+      {
+        heading: "Explainable engines",
+        body: "Wrote the qualification and compliance engines as deterministic, testable logic, so every score comes with the reasons behind it.",
+      },
+      {
+        heading: "Connected AI",
+        body: "Added an AI agent widget through a Node proxy to the SNS Agent Workbench, with a fallback that keeps the app useful offline and on static hosting.",
+      },
+    ],
+    result:
+      "Live on GitHub Pages and deployed automatically on every push. It is positioned as decision support: the UI says 'Ready for internal review', never 'approved' or 'guaranteed compliant'.",
+    highlights: [
+      { value: "13", label: "Product pages" },
+      { value: "5", label: "Fit dimensions" },
+      { value: "6", label: "Workflow stages" },
+      { value: "CI/CD", label: "GitHub Actions" },
+    ],
+    note: "GrantPilot gives AI-assisted decision support. Final eligibility, legal and submission decisions go through the official government process.",
+    screens: [
+      {
+        src: "/projects/grantpilot/qualification.webp",
+        alt: "GrantPilot qualification showing an 82% strong match",
+        caption: "Qualification: 82% strong match, explained",
+        width: 1920,
+        height: 1200,
+      },
+      {
+        src: "/projects/grantpilot/compliance.webp",
+        alt: "GrantPilot compliance workspace with readiness gate",
+        caption: "Compliance workspace and readiness gate",
+        width: 1920,
+        height: 1200,
+      },
+      {
+        src: "/projects/grantpilot/opportunities.webp",
+        alt: "GrantPilot AI opportunity matching list",
+        caption: "AI opportunity matching",
+        width: 1920,
+        height: 1200,
+      },
+      {
+        src: "/projects/grantpilot/proposal.webp",
+        alt: "GrantPilot proposal workspace with writing guidance",
+        caption: "Proposal workspace with guidance",
+        width: 1920,
+        height: 1200,
+      },
+      {
+        src: "/projects/grantpilot/pipeline.webp",
+        alt: "GrantPilot opportunity pipeline board",
+        caption: "Opportunity pipeline",
+        width: 1920,
+        height: 1200,
+      },
+      {
+        src: "/projects/grantpilot/reports.webp",
+        alt: "GrantPilot portfolio reports",
+        caption: "Portfolio reports",
+        width: 1920,
+        height: 1200,
+      },
+      {
+        src: "/projects/grantpilot/dashboard.webp",
+        alt: "GrantPilot dashboard",
+        caption: "Dashboard",
+        width: 1920,
+        height: 1200,
+      },
+    ],
+    links: [
+      { label: "Open the live app", href: "https://thanvanthat.github.io/GrantPilot-Frontend/#/dashboard", kind: "live" },
+      { label: "Source code", href: "https://github.com/thanvanthat/GrantPilot-Frontend", kind: "source" },
+    ],
+    gallery: [
+      { caption: "Qualification", variant: 0 },
+      { caption: "Proposal", variant: 1 },
+      { caption: "Compliance", variant: 2 },
+    ],
+  },
+  {
+    slug: "echo-protocol-escape",
+    number: "04",
     title: "Echo Protocol: Escape",
     statement: "Third-person action-adventure prototype.",
     description:
@@ -162,7 +376,7 @@ export const projects: Project[] = [
   },
   {
     slug: "eco-dash",
-    number: "04",
+    number: "05",
     title: "Eco Dash",
     statement: "A sustainability-focused endless runner.",
     description:
@@ -206,7 +420,7 @@ export const projects: Project[] = [
   },
   {
     slug: "game-dev-event-platform",
-    number: "05",
+    number: "06",
     title: "Game Dev Event Platform",
     statement: "A home base for game development events.",
     description:
@@ -264,3 +478,6 @@ export const gameProjects = ["brainverse-ai", "echo-protocol-escape", "eco-dash"
 
 /** Order of the cinematic chapter sequence. */
 export const chapterProjects = projects;
+
+/** Shipped products with real captures and live links. */
+export const liveProjects = projects.filter((p) => p.screens?.length && p.links?.length);
