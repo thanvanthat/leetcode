@@ -1,0 +1,238 @@
+@import "tailwindcss";
+
+@custom-variant hover-fine (@media (hover: hover) and (pointer: fine));
+
+@theme {
+  --color-ink: #09090a;
+  --color-coal: #0f0f11;
+  --color-graphite: #17171a;
+  --color-smoke: #232327;
+  --color-bone: #ecebe6;
+  --color-ash: #8b8b90;
+  --color-steel: #b4b8bf;
+  --color-line: rgb(236 235 230 / 0.1);
+  --color-ai: #9fd4ff;
+  --color-ember: #ff6a3d;
+
+  --font-display: var(--font-archivo), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --ease-cine: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --breakpoint-xs: 26rem;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --gutter: clamp(1rem, 4vw, 3.5rem);
+  }
+
+  html {
+    background: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
+    scrollbar-color: var(--color-smoke) var(--color-ink);
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-bone);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-bone);
+    outline-offset: 4px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+}
+
+@layer components {
+  /* Giant condensed display type */
+  .display {
+    font-family: var(--font-display);
+    font-stretch: 62%;
+    font-variation-settings: "wdth" 62;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 0.84;
+    letter-spacing: -0.01em;
+  }
+
+  .display-wide {
+    font-family: var(--font-display);
+    font-variation-settings: "wdth" 112;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .gutter {
+    padding-inline: var(--gutter);
+  }
+
+  .hairline {
+    border-color: var(--color-line);
+  }
+
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(236 235 230 / 0.5);
+  }
+
+  /* Static film grain; no animation to stay cheap */
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 90;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  .scan-grid {
+    background-image:
+      linear-gradient(to right, rgb(236 235 230 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(236 235 230 / 0.05) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+}
+
+/* Custom cursor only when the device has a fine pointer */
+@media (hover: hover) and (pointer: fine) {
+  html.has-cursor,
+  html.has-cursor * {
+    cursor: none !important;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@keyframes scan {
+  0% {
+    transform: translate3d(0, -10%, 0);
+  }
+  100% {
+    transform: translate3d(0, 1000%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Signal pulse travelling along Pipeline connectors */
+.pipeline-pulse {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1.5rem;
+  background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+  animation: pipeline-pulse-y 2.6s cubic-bezier(0.6, 0, 0.4, 1) infinite;
+}
+@media (min-width: 1024px) {
+  .pipeline-pulse:not(.pipeline-pulse--vertical) {
+    width: 2rem;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--accent), transparent);
+    animation-name: pipeline-pulse-x;
+  }
+}
+@keyframes pipeline-pulse-y {
+  0% {
+    transform: translate3d(0, -100%, 0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, 600%, 0);
+    opacity: 0;
+  }
+}
+@keyframes pipeline-pulse-x {
+  0% {
+    transform: translate3d(-100%, 0, 0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(1200%, 0, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bp-flow {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+html[data-intro="skip"] .intro-loader {
+  display: none;
+}
