@@ -4,10 +4,19 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import type { ComponentProps } from "react";
 import { navItems, site, socials } from "@/data/site";
+import type { NavItem } from "@/lib/types";
 import { useActiveSection } from "@/lib/hooks";
 import { cn, easeCine, easeOutExpo } from "@/lib/utils";
 import { BrandIcon } from "@/components/ui/BrandIcon";
+
+const MotionLink = motion.create(Link);
+
+/** Section anchors stay plain links (native smooth scroll); separate routes use client navigation. */
+function NavLink({ href, ...props }: ComponentProps<"a"> & { href: string }) {
+  return href.startsWith("/") && !href.includes("#") ? <Link href={href} {...props} /> : <a href={href} {...props} />;
+}
 
 /** Floating minimal navigation with scroll state, active indicator and a full-screen mobile menu. */
 export function Navbar() {
@@ -36,7 +45,9 @@ export function Navbar() {
     };
   }, [open]);
 
-  const href = (id: string) => (onHome ? `#${id}` : `/#${id}`);
+  const href = (item: NavItem) => item.href ?? (onHome ? `#${item.id}` : `/#${item.id}`);
+  const isActive = (item: NavItem) =>
+    item.href ? pathname === item.href || pathname.startsWith(`${item.href}/`) : onHome && active === item.id;
 
   return (
     <>
@@ -59,18 +70,18 @@ export function Navbar() {
 
           <ul className="hidden items-center gap-1 lg:flex">
             {navItems.map((item) => {
-              const isActive = onHome && active === item.id;
+              const current = isActive(item);
               return (
                 <li key={item.id}>
-                  <a
-                    href={href(item.id)}
-                    aria-current={isActive ? "true" : undefined}
+                  <NavLink
+                    href={href(item)}
+                    aria-current={current ? (item.href ? "page" : "true") : undefined}
                     className={cn(
                       "label relative block px-3 py-2 transition-colors duration-300",
-                      isActive ? "text-bone" : "text-ash hover-fine:text-bone",
+                      current ? "text-bone" : "text-ash hover-fine:text-bone",
                     )}
                   >
-                    {isActive && (
+                    {current && (
                       <motion.span
                         layoutId="nav-active"
                         className="absolute inset-x-3 -bottom-px h-px bg-bone"
@@ -78,7 +89,7 @@ export function Navbar() {
                       />
                     )}
                     {item.label}
-                  </a>
+                  </NavLink>
                 </li>
               );
             })}
@@ -129,8 +140,8 @@ export function Navbar() {
             <ul className="flex flex-col">
               {navItems.map((item, i) => (
                 <li key={item.id} className="overflow-hidden border-b border-bone/10">
-                  <motion.a
-                    href={href(item.id)}
+                  <MotionLink
+                    href={href(item)}
                     onClick={() => setOpen(false)}
                     className="flex items-baseline justify-between py-2"
                     initial={{ y: "110%" }}
@@ -140,7 +151,7 @@ export function Navbar() {
                   >
                     <span className="display text-[clamp(2.75rem,12vw,5rem)]">{item.label}</span>
                     <span className="label text-ash">0{i + 1}</span>
-                  </motion.a>
+                  </MotionLink>
                 </li>
               ))}
             </ul>

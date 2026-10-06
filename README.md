@@ -20,14 +20,23 @@ Edit `data/site.ts`:
 
 Project facts (status, engine, technologies) live in `data/projects.ts`. They are written conservatively, so update them as projects move along.
 
+## Writing a blog post
+
+Add an entry to `data/posts.ts`: a unique `slug`, an ISO `date`, `tags`, an `excerpt` and a `body` made of typed
+blocks (`p`, `h2`, `h3`, `list`, `quote`, `code`, `callout`; see `PostBlock` in `lib/types.ts`). Posts are sorted by
+date automatically and appear on `/blog`, the home page "Writing" section, the sitemap and the RSS feed.
+Set `draft: true` to hide a post while you work on it.
+
 ## Structure
 
 ```
-app/                 routes: home, /projects/[slug] case studies, OG image, sitemap, robots
+app/                 routes: home, /projects/[slug] case studies, /blog + /blog/[slug] posts,
+                     /blog/feed.xml (RSS), OG image, sitemap, robots
 components/
   layout/            Navbar, Footer, Loader, CursorInteraction, PageTransition
   sections/          Hero (+ HeroScene WebGL), About, Experience, ProjectShowcase, GameDev,
                      Unreal, AI, FreshcoFeature, BrainverseFeature, Skills/TechStack, Process, Contact
+  blog/              PostCard, PostBody (renders typed post blocks), BlogIndex (tag filter)
   projects/          GameProject, AIProject, ProjectModal, ProjectMeta, CaseStudy
   visuals/           procedural SVG key art, Blueprint graph, scanner demo, adaptive mini-game
   ui/                RevealText, WordReveal, MagneticButton, Pipeline, Marquee, ...

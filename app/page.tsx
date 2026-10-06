@@ -7,6 +7,7 @@ import { FresoraFeature } from "@/components/sections/FresoraFeature";
 import { GrantPilotFeature } from "@/components/sections/GrantPilotFeature";
 import { GameDevSection } from "@/components/sections/GameDevSection";
 import { Hero } from "@/components/sections/Hero";
+import { LatestPosts } from "@/components/sections/LatestPosts";
 import { ProcessSection } from "@/components/sections/ProcessSection";
 import { ProjectShowcase } from "@/components/sections/ProjectShowcase";
 import { SkillsSection } from "@/components/sections/SkillsSection";
@@ -27,6 +28,7 @@ export default function HomePage() {
       <BrainverseFeature />
       <SkillsSection />
       <ProcessSection />
+      <LatestPosts />
       <ContactSection />
     </>
   );

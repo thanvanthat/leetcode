@@ -30,6 +30,7 @@ export const navItems: NavItem[] = [
   { id: "game-dev", label: "Game Dev" },
   { id: "ai", label: "AI" },
   { id: "skills", label: "Skills" },
+  { id: "blog", label: "Blog", href: "/blog" },
   { id: "contact", label: "Contact" },
 ];
 

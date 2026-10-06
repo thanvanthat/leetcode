@@ -24,3 +24,25 @@ export function seeded(seed: number) {
 /** Easing shared by Framer Motion transitions. */
 export const easeCine = [0.76, 0, 0.24, 1] as const;
 export const easeOutExpo = [0.16, 1, 0.3, 1] as const;
+
+/** "2026-10-06" → "Oct 6, 2026". Parsed as UTC so server and client agree. */
+export function formatDate(iso: string) {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  });
+}
+
+/** Rough reading time in minutes at ~220 words per minute. */
+export function readingTime(text: string) {
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 220));
+}
+
+export const slugify = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");

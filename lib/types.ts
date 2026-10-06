@@ -77,6 +77,8 @@ export interface Project {
 export interface NavItem {
   id: string;
   label: string;
+  /** Set for links to a separate route instead of a home-page section. */
+  href?: string;
 }
 
 export interface SocialLink {
@@ -110,4 +112,27 @@ export interface ResearchThread {
   status: ProjectStatus;
   summary: string;
   slug?: string;
+}
+
+/** A piece of a blog post body. Kept structured so posts stay typed data, not raw HTML. */
+export type PostBlock =
+  | { type: "p"; text: string }
+  | { type: "h2"; text: string }
+  | { type: "h3"; text: string }
+  | { type: "list"; items: string[]; ordered?: boolean }
+  | { type: "quote"; text: string; cite?: string }
+  | { type: "code"; code: string; lang?: string }
+  | { type: "callout"; text: string };
+
+export interface Post {
+  slug: string;
+  title: string;
+  /** One or two sentences shown on cards, meta description and the RSS feed. */
+  excerpt: string;
+  /** ISO date, e.g. "2026-10-06". */
+  date: string;
+  tags: string[];
+  /** Hide from listings, sitemap and feed while still drafting. */
+  draft?: boolean;
+  body: PostBlock[];
 }
