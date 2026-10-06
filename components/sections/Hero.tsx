@@ -3,6 +3,7 @@
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
+import { liveProjects } from "@/data/projects";
 import { site } from "@/data/site";
 import { useIsDesktop } from "@/lib/hooks";
 import { easeOutExpo } from "@/lib/utils";
@@ -141,11 +142,30 @@ export function Hero() {
 
         <div className="mt-8 flex items-end justify-between border-t border-bone/10 pt-5">
           <ScrollIndicator />
-          <ul className="label hidden gap-8 text-ash md:flex" aria-label="Focus areas">
-            <li>Unreal Engine 5</li>
-            <li>Computer Vision</li>
-            <li>Interactive Systems</li>
-          </ul>
+          <div className="label flex flex-wrap items-center justify-end gap-x-6 gap-y-2 text-ash">
+            <span className="flex items-center gap-2">
+              <span className="relative flex size-1.5">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#9fe0a0]" />
+                <span className="relative inline-flex size-1.5 rounded-full bg-[#9fe0a0]" />
+              </span>
+              Live now
+            </span>
+            {liveProjects.map((p) => (
+              <a
+                key={p.slug}
+                href={`#${p.slug}`}
+                className="group inline-flex items-center gap-1.5 text-bone transition-colors"
+                style={{ ["--c" as string]: p.atmosphere.accent }}
+              >
+                <span className="border-b border-transparent pb-0.5 transition-colors group-hover:border-[var(--c)]">
+                  {p.title}
+                </span>
+                <span aria-hidden="true" className="text-[var(--c)]">
+                  ↗
+                </span>
+              </a>
+            ))}
+          </div>
         </div>
       </motion.div>
     </section>

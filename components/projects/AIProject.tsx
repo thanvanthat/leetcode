@@ -20,7 +20,9 @@ export function AIProject({ thread, index }: AIProjectProps) {
       </div>
       <div className="label col-span-10 col-start-3 flex items-center justify-between gap-4 text-ash sm:col-span-5 sm:col-start-auto sm:justify-end">
         <span className="flex items-center gap-2">
-          <span className={`size-1.5 rounded-full ${thread.status === "Exploring" ? "bg-ash" : "bg-ai"}`} />
+          <span
+            className={`size-1.5 rounded-full ${thread.status === "Exploring" ? "bg-ash" : thread.status === "Live" ? "bg-[#7fe0a0]" : "bg-ai"}`}
+          />
           {thread.status}
         </span>
         {thread.slug && (

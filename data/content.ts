@@ -33,8 +33,8 @@ export const timeline: TimelineEntry[] = [
   {
     chapter: "IV",
     title: "Convergence",
-    body: "Now building projects where the two meet: adaptive games, AI-assisted systems and interactive web experiences.",
-    tags: ["BrainVerse AI", "FreshcoAI", "Web"],
+    body: "Now shipping projects where they meet: Fresora and GrantPilot AI are live, alongside adaptive games and interactive web experiences.",
+    tags: ["Fresora", "GrantPilot AI", "BrainVerse AI"],
   },
 ];
 
@@ -91,21 +91,22 @@ export const aiPipeline: PipelineStep[] = [
 
 export const researchThreads: ResearchThread[] = [
   {
-    title: "FreshcoAI",
-    status: "Prototype",
-    summary: "Food identification and visual freshness estimation for smarter inventory.",
-    slug: "freshco-ai",
+    title: "Fresora",
+    status: "Live",
+    summary: "Food identification with MobileNetV2 and YOLOX, OpenCV freshness measurement and an explainable score.",
+    slug: "fresora",
+  },
+  {
+    title: "GrantPilot AI",
+    status: "Live",
+    summary: "Explainable qualification, proposal and compliance engines for government grants and tenders, with an AI agent.",
+    slug: "grantpilot-ai",
   },
   {
     title: "BrainVerse AI",
     status: "In development",
     summary: "Gameplay signals driving adaptive difficulty in cognitive challenges.",
     slug: "brainverse-ai",
-  },
-  {
-    title: "Computer vision systems",
-    status: "Exploring",
-    summary: "Detection and classification pipelines for real-world camera input.",
   },
   {
     title: "AI-assisted game systems",

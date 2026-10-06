@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 import { chapterProjects } from "@/data/projects";
 import { useFinePointer } from "@/lib/hooks";
 import { cn, easeOutExpo } from "@/lib/utils";
-import { ProjectVisual } from "@/components/visuals/ProjectVisual";
+import { ProjectArt } from "@/components/visuals/ProjectArt";
 import { RevealText } from "@/components/ui/RevealText";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 
@@ -67,7 +67,7 @@ export function ProjectShowcase() {
               >
                 {!fine && (
                   <div className="col-span-12 aspect-[16/9] overflow-hidden">
-                    <ProjectVisual project={p} />
+                    <ProjectArt project={p} />
                   </div>
                 )}
                 <span className="label col-span-2 self-start pt-3 text-ash lg:col-span-1">{p.number}</span>
@@ -85,9 +85,20 @@ export function ProjectShowcase() {
                 </div>
                 <div className="label col-span-12 flex flex-wrap gap-x-6 gap-y-2 text-ash lg:col-span-4 lg:flex-col lg:items-end lg:text-right">
                   <span>{p.type}</span>
-                  <span className="flex items-center gap-2">
-                    <span className="size-1.5 rounded-full" style={{ background: p.atmosphere.accent }} />
-                    {p.status}
+                  <span
+                    className="flex items-center gap-2"
+                    style={p.status === "Live" ? { color: p.atmosphere.accent } : undefined}
+                  >
+                    <span className="relative flex size-1.5">
+                      {p.status === "Live" && (
+                        <span
+                          className="absolute inline-flex size-full animate-ping rounded-full"
+                          style={{ background: p.atmosphere.accent }}
+                        />
+                      )}
+                      <span className="relative inline-flex size-1.5 rounded-full" style={{ background: p.atmosphere.accent }} />
+                    </span>
+                    {p.status === "Live" ? "Live · try it" : p.status}
                   </span>
                 </div>
               </Link>
@@ -114,7 +125,7 @@ export function ProjectShowcase() {
                     animate={{ scale: 1 }}
                     transition={{ duration: 1, ease: easeOutExpo }}
                   >
-                    <ProjectVisual project={current} animated />
+                    <ProjectArt project={current} animated />
                   </motion.div>
                 </motion.div>
               )}

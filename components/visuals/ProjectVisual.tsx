@@ -421,6 +421,7 @@ function EventPlatformScene({ a, variant }: SceneProps) {
 const scenes: Record<ProjectVisualKey, (props: SceneProps) => ReactElement> = {
   brainverse: BrainVerseScene,
   freshco: FreshcoScene,
+  grantpilot: EventPlatformScene,
   echo: EchoScene,
   ecodash: EcoDashScene,
   eventplatform: EventPlatformScene,

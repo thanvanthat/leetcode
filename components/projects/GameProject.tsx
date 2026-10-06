@@ -3,7 +3,7 @@
 import { ArrowUpRight } from "lucide-react";
 import type { Project } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { ProjectVisual } from "@/components/visuals/ProjectVisual";
+import { ProjectArt } from "@/components/visuals/ProjectArt";
 import { ProjectMeta } from "./ProjectMeta";
 
 interface GameProjectProps {
@@ -25,7 +25,7 @@ export function GameProject({ project, index, total, onOpen, className }: GamePr
       {/* Visual layer with inner parallax target */}
       <div className="relative h-[52vh] overflow-hidden lg:absolute lg:inset-0 lg:h-auto">
         <div className="game-visual absolute inset-0 lg:-inset-x-[8%]">
-          <ProjectVisual project={project} animated />
+          <ProjectArt project={project} animated />
         </div>
         <div className="absolute inset-0 hidden bg-gradient-to-r from-black/80 via-black/30 to-transparent lg:block" />
       </div>
