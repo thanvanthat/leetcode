@@ -17,6 +17,17 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react", "framer-motion"],
   },
+  async redirects() {
+    // The site used to live at the auto-generated "leetcode" address; send those visitors to the real one
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "leetcode-orpin-one.vercel.app" }],
+        destination: "https://thanvanth.vercel.app/:path*",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

@@ -8,7 +8,7 @@ export const site = {
   tagline: "I build interactive worlds, intelligent systems, and experiences where creativity meets technology.",
   positioning:
     "Computer Science and Engineering student focused on game development, AI, software engineering and interactive technology.",
-  url: "https://leetcode-orpin-one.vercel.app",
+  url: "https://thanvanth.vercel.app",
   title: "Thanvanth AT — Game Developer & AI Engineer",
   description: "Game Developer and AI Engineer building interactive experiences, AI systems and creative technology.",
   email: "thanvanthat24@gmail.com",
