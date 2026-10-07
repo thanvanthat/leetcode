@@ -1,11 +1,12 @@
 "use client";
 
-import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { liveProjects } from "@/data/projects";
 import { site } from "@/data/site";
-import { useIsDesktop } from "@/lib/hooks";
+import { useIsDesktop, usePrefersReducedMotion } from "@/lib/hooks";
 import { easeOutExpo } from "@/lib/utils";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { RevealText } from "@/components/ui/RevealText";
@@ -15,12 +16,13 @@ const HeroScene = dynamic(() => import("./HeroScene"), { ssr: false, loading: ()
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
-  const reduce = useReducedMotion() ?? false;
+  const reduce = usePrefersReducedMotion();
   const desktop = useIsDesktop();
   const [inView, setInView] = useState(true);
   const [sceneReady, setSceneReady] = useState(false);
 
-  // Mount WebGL after first paint so text and LCP are never blocked by three.js
+  // Mount WebGL after first paint so text and LCP are never blocked by three.js.
+  // Phones and tablets get a still of the scene instead, so three.js never downloads there.
   useEffect(() => {
     const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 200));
     const handle = idle(() => setSceneReady(true));
@@ -66,7 +68,8 @@ export function Hero() {
     >
       {/* WebGL world */}
       <motion.div className="absolute inset-0 -z-10" style={{ opacity: fade }}>
-        {sceneReady && <HeroScene active={inView} reduced={reduce} mobile={!desktop} />}
+        <Image src="/hero-poster.webp" alt="" fill sizes="100vw" className="object-cover object-right lg:hidden" />
+        {sceneReady && desktop && <HeroScene active={inView} reduced={reduce} mobile={false} />}
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_70%_45%,transparent_0%,rgba(9,9,10,0.35)_45%,#09090a_85%)]" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink to-transparent" />
       </motion.div>
