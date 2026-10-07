@@ -40,7 +40,9 @@ export function Hero() {
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    if (desktop || reduce || !inView) video.pause();
+    // Read the media queries directly: the hooks report "not desktop" during hydration
+    const skip = matchMedia("(min-width: 1024px)").matches || matchMedia("(prefers-reduced-motion: reduce)").matches || !inView;
+    if (skip) video.pause();
     else video.play().catch(() => {});
   }, [desktop, reduce, inView]);
 
@@ -84,7 +86,6 @@ export function Hero() {
         <Image src="/hero-poster.webp" alt="" fill sizes="100vw" className="object-cover object-right lg:hidden" />
         <video
           ref={videoRef}
-          src="/hero-morph.mp4"
           poster="/hero-morph-poster.webp"
           muted
           loop
@@ -92,18 +93,20 @@ export function Hero() {
           preload="none"
           aria-hidden="true"
           className="pointer-events-none absolute -right-[14%] top-[9%] aspect-square w-[100vw] max-w-[40rem] mix-blend-screen sm:top-[4%] lg:hidden"
-        />
-        {sceneReady &&
-          (desktop || Boolean((window as unknown as { __heroCapture?: string }).__heroCapture)) /* CAPTURE-ONLY */ && (
-            <HeroScene
-              active={inView}
-              reduced={reduce}
-              mobile={false}
-              eventSource={ref}
-              scroll={scrollYProgress}
-              onForm={setForm}
-            />
-          )}
+        >
+          <source src="/hero-morph.mp4" type="video/mp4" />
+          <source src="/hero-morph.webm" type="video/webm" />
+        </video>
+        {sceneReady && desktop && (
+          <HeroScene
+            active={inView}
+            reduced={reduce}
+            mobile={false}
+            eventSource={ref}
+            scroll={scrollYProgress}
+            onForm={setForm}
+          />
+        )}
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_70%_45%,transparent_0%,rgba(9,9,10,0.35)_45%,#09090a_85%)]" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink to-transparent" />
       </motion.div>

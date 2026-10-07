@@ -235,8 +235,6 @@ function MorphCloud({ count, scroll, onForm, still }: MorphCloudProps) {
     const m = material.current;
     if (!m || !group.current) return;
     if (!still) time.current += Math.min(delta, 0.1);
-    const forced = (window as unknown as { __heroTime?: number }).__heroTime; // CAPTURE-ONLY
-    if (forced !== undefined) time.current = forced; // CAPTURE-ONLY
     const t = time.current;
     m.uniforms.uTime!.value = t;
     m.uniforms.uPixelRatio!.value = state.gl.getPixelRatio();
@@ -326,11 +324,8 @@ export default function HeroScene({ active, reduced, mobile, eventSource, scroll
       eventPrefix="client"
       aria-hidden="true"
     >
-      {(window as unknown as { __heroCapture?: string }).__heroCapture !== "cloud" && <Terrain />} {/* CAPTURE-ONLY */}
-      {(window as unknown as { __heroCapture?: string }).__heroCapture !== "terrain" && (
-        <MorphCloud count={mobile ? 9000 : 20000} scroll={scroll} onForm={onForm} still={reduced} />
-      )}{" "}
-      {/* CAPTURE-ONLY */}
+      <Terrain />
+      <MorphCloud count={mobile ? 9000 : 20000} scroll={scroll} onForm={onForm} still={reduced} />
       {!reduced && <CameraRig mobile={mobile} />}
     </Canvas>
   );
