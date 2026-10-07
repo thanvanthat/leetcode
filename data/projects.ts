@@ -85,7 +85,7 @@ export const projects: Project[] = [
       "Vercel",
     ],
     status: "Live",
-    visual: "freshco",
+    visual: "fresora",
     device: "phone",
     atmosphere: { accent: "#c5ec7a", base: "#0a0f0a", glow: "#2d4a1f" },
     overview:
@@ -185,11 +185,6 @@ export const projects: Project[] = [
     links: [
       { label: "Open the live app", href: "https://fresora-web.vercel.app/inventory", kind: "live" },
       { label: "Source code", href: "https://github.com/thanvanthat/fresora-AI", kind: "source" },
-    ],
-    gallery: [
-      { caption: "Live scan", variant: 0 },
-      { caption: "Detection overlay", variant: 1 },
-      { caption: "Inventory insight", variant: 2 },
     ],
   },
   {
@@ -321,11 +316,6 @@ export const projects: Project[] = [
     links: [
       { label: "Open the live app", href: "https://thanvanthat.github.io/GrantPilot-Frontend/#/dashboard", kind: "live" },
       { label: "Source code", href: "https://github.com/thanvanthat/GrantPilot-Frontend", kind: "source" },
-    ],
-    gallery: [
-      { caption: "Qualification", variant: 0 },
-      { caption: "Proposal", variant: 1 },
-      { caption: "Compliance", variant: 2 },
     ],
   },
   {

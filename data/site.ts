@@ -1,9 +1,6 @@
 import type { NavItem, SocialLink } from "@/lib/types";
 
-/**
- * Global identity + contact details.
- * Replace the value marked TODO before deploying.
- */
+/** Global identity + contact details. Update `url` if the site moves to a new domain. */
 export const site = {
   name: "Thanvanth AT",
   shortName: "Thanvanth",
