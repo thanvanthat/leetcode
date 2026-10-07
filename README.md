@@ -14,7 +14,7 @@ npm run lint && npm run typecheck && npm run format:check
 
 ## Deploying
 
-The site deploys to Vercel from `main` (https://leetcode-orpin-one.vercel.app). If the domain changes, update `url` in `data/site.ts`; it drives canonical URLs, share images, the sitemap and robots.txt.
+The site deploys to Vercel from `main` (https://thanvanth.vercel.app). If the domain changes, update `url` in `data/site.ts`; it drives canonical URLs, share images, the sitemap and robots.txt.
 
 Project facts (status, engine, technologies, screenshots, live and source links) live in `data/projects.ts`. Update them as projects move along.
 
